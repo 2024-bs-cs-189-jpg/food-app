@@ -873,6 +873,14 @@ img { max-width: 100%; display: block; }
 
 [data-theme="dark"] body { background: var(--cream); }
 
+/* Bootstrap utility classes carry their own fixed colors and don't
+   follow our CSS variables by default -- override them here so text
+   stays readable (light text in dark mode, dark text in light mode). */
+[data-theme="dark"] .text-dark { color: var(--ink) !important; }
+[data-theme="dark"] .text-muted { color: var(--ink-soft) !important; }
+[data-theme="dark"] .text-black { color: var(--ink) !important; }
+[data-theme="dark"] .text-body { color: var(--ink) !important; }
+
 [data-theme="dark"] .site-navbar {
   background: rgba(21, 19, 15, 0.9);
   border-bottom-color: rgba(255, 255, 255, 0.06);
