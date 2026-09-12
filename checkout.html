@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+(function () {
+  // Apply saved theme immediately, before CSS/paint, to avoid a flash
+  try {
+    var t = localStorage.getItem("savorco_theme") || "light";
+    document.documentElement.setAttribute("data-theme", t);
+  } catch (e) {}
+
+  // Register the broken-image fallback as early as possible (before
+  // any <img> in <body> starts loading) so fast failures are always
+  // caught -- a listener attached later (e.g. at DOMContentLoaded)
+  // can miss images that error out immediately.
+  document.addEventListener("error", function (evt) {
+    var img = evt.target;
+    if (!img || img.tagName !== "IMG" || img.dataset.fallbackApplied) return;
+    img.dataset.fallbackApplied = "true";
+    var ph = document.createElement("div");
+    ph.className = (img.className || "") + " img-fallback";
+    ph.setAttribute("role", "img");
+    ph.setAttribute("aria-label", img.alt || "Image unavailable");
+    ph.innerHTML = '<i class="fa-solid fa-bowl-food"></i>';
+    if (img.parentNode) img.parentNode.replaceChild(ph, img);
+  }, true);
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — Savor & Co.</title>
+<meta name="description" content="Complete your order — delivery details, payment method and confirmation.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="checkout">
+
+<div id="loading-screen">
+  <div class="loader-mark"></div>
+  <div class="loader-text">Savor & Co.</div>
+</div>
+
+<nav class="site-navbar navbar navbar-expand-lg">
+  <div class="container-narrow d-flex align-items-center justify-content-between">
+    <a href="index.html" class="brand-mark"><i class="fa-solid fa-leaf"></i> Savor<span>&</span>Co.</a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+      <i class="fa-solid fa-bars fs-4"></i>
+    </button>
+    <div class="collapse navbar-collapse flex-grow-0" id="mainNavbar">
+      <ul class="navbar-nav mx-lg-4 gap-lg-2">
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="menu.html">Menu</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="offers.html">Offers</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="contact.html">Contact</a></li>
+      </ul>
+      <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
+        <a href="menu.html" class="btn-icon-circle" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></a>
+        <button class="btn-icon-circle theme-toggle-btn" id="themeToggleBtn" type="button" aria-label="Toggle dark mode">
+          <i class="fa-solid fa-moon"></i><i class="fa-solid fa-sun"></i>
+        </button>
+        <a href="cart.html" class="btn-icon-circle cart-badge-wrap" aria-label="Cart">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="cart-count-badge js-cart-count">0</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" style="padding:2.6rem 0;">
+  <div class="container-narrow reveal up in-view">
+    <span class="hero-eyebrow">Step 2 of 2</span>
+    <h1 style="font-size:clamp(1.8rem,3.4vw,2.6rem);">Checkout</h1>
+  </div>
+</header>
+
+<!-- =========================
+     CHECKOUT FORM
+========================= -->
+<section class="container-narrow pb-5" id="checkout-form-section">
+  <div class="row g-4">
+    <div class="col-lg-8">
+      <form id="checkoutForm" class="needs-validation" novalidate>
+
+        <!-- Customer info -->
+        <div class="form-card mb-4">
+          <h2 class="h6 mb-3"><i class="fa-solid fa-user me-2"></i>Customer Information</h2>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Full Name</label>
+              <input type="text" class="form-control" required>
+              <div class="invalid-feedback">Please enter your name.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Phone Number</label>
+              <input type="tel" class="form-control" required>
+              <div class="invalid-feedback">Phone number is required.</div>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Email Address</label>
+              <input type="email" class="form-control" required>
+              <div class="invalid-feedback">Please enter a valid email.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Delivery address -->
+        <div class="form-card mb-4">
+          <h2 class="h6 mb-3"><i class="fa-solid fa-location-dot me-2"></i>Delivery Address</h2>
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label">Street Address</label>
+              <input type="text" class="form-control" required>
+              <div class="invalid-feedback">Address is required.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">City</label>
+              <input type="text" class="form-control" required>
+              <div class="invalid-feedback">City is required.</div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Postal Code</label>
+              <input type="text" class="form-control" required>
+              <div class="invalid-feedback">Postal code is required.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment method -->
+        <div class="form-card mb-4">
+          <h2 class="h6 mb-3"><i class="fa-solid fa-credit-card me-2"></i>Payment Method</h2>
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="payment-option selected" data-pay="card">
+                <input type="radio" name="payment" value="card" checked class="d-none">
+                <i class="fa-solid fa-credit-card fs-5"></i>
+                <span class="fw-semibold small">Credit / Debit Card</span>
+              </label>
+            </div>
+            <div class="col-md-4">
+              <label class="payment-option" data-pay="cash">
+                <input type="radio" name="payment" value="cash" class="d-none">
+                <i class="fa-solid fa-money-bill-wave fs-5"></i>
+                <span class="fw-semibold small">Cash on Delivery</span>
+              </label>
+            </div>
+            <div class="col-md-4">
+              <label class="payment-option" data-pay="wallet">
+                <input type="radio" name="payment" value="wallet" class="d-none">
+                <i class="fa-solid fa-wallet fs-5"></i>
+                <span class="fw-semibold small">Digital Wallet</span>
+              </label>
+            </div>
+          </div>
+          <div id="cardFieldsWrap" class="row g-3 mt-1">
+            <div class="col-md-6">
+              <label class="form-label">Card Number</label>
+              <input type="text" class="form-control" placeholder="1234 5678 9012 3456" id="cardNumberInput">
+              <div class="invalid-feedback">Please enter a valid card number.</div>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Expiry</label>
+              <input type="text" class="form-control" placeholder="MM/YY" id="cardExpiryInput">
+              <div class="invalid-feedback">Required.</div>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">CVV</label>
+              <input type="text" class="form-control" placeholder="123" id="cardCvvInput">
+              <div class="invalid-feedback">Required.</div>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-brand w-100 py-3">Place Order</button>
+      </form>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="summary-card">
+        <h3 class="h6 mb-3">Order Summary</h3>
+        <div id="checkout-items-list" class="mb-3"></div>
+        <hr>
+        <div class="summary-row"><span>Subtotal</span><span class="js-subtotal">$0.00</span></div>
+        <div class="summary-row"><span>Delivery Charges</span><span class="js-delivery">$0.00</span></div>
+        <div class="summary-row"><span>Discount</span><span class="js-discount">-$0.00</span></div>
+        <div class="summary-row total"><span>Grand Total</span><span class="js-total">$0.00</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     ORDER CONFIRMATION (shown after successful "placement")
+========================= -->
+<section class="container-narrow pb-5 d-none" id="order-confirmation-section">
+  <div class="text-center mx-auto" style="max-width:480px;">
+    <div class="confirm-check"><i class="fa-solid fa-check"></i></div>
+    <h2 class="h3">Order Confirmed!</h2>
+    <p class="text-muted">Thank you — your order has been placed and is being prepared. A confirmation has been sent to your email.</p>
+    <p class="fw-bold" style="color:var(--fresh-green);">Estimated delivery: 25–35 minutes</p>
+    <a href="index.html" class="btn-brand mt-3">Back to Home</a>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container-narrow">
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <a href="index.html" class="brand-mark text-white mb-3 d-inline-flex"><i class="fa-solid fa-leaf"></i> Savor<span>&</span>Co.</a>
+        <p class="small">Fresh, seasonal food made daily and delivered with care across the city.</p>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h6>Quick Links</h6>
+        <ul class="list-unstyled footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-6 col-lg-2">
+        <h6>Support</h6>
+        <ul class="list-unstyled footer-links">
+          <li><a href="contact.html">Help Center</a></li>
+          <li><a href="contact.html">Track Order</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4">
+        <h6>Contact</h6>
+        <p class="small mb-1"><i class="fa-solid fa-phone me-2"></i>+1 (555) 204-7788</p>
+        <p class="small mb-0"><i class="fa-solid fa-envelope me-2"></i>hello@savorandco.com</p>
+      </div>
+    </div>
+    <div class="footer-bottom text-center">© 2026 Savor & Co. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/cart.js"></script>
+<script>
+  // ---------------------------------------------------------
+  // PAYMENT METHOD SELECTOR
+  // ---------------------------------------------------------
+  document.querySelectorAll(".payment-option").forEach((opt) => {
+    opt.addEventListener("click", () => {
+      document.querySelectorAll(".payment-option").forEach((o) => o.classList.remove("selected"));
+      opt.classList.add("selected");
+      opt.querySelector("input").checked = true;
+      document.getElementById("cardFieldsWrap").style.display = opt.dataset.pay === "card" ? "flex" : "none";
+    });
+  });
+
+  // ---------------------------------------------------------
+  // CHECKOUT SUBMIT -> ORDER CONFIRMATION ANIMATION
+  // ---------------------------------------------------------
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("checkoutForm");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      form.classList.add("was-validated");
+      if (!form.checkValidity()) return;
+      if (cartSubtotal() <= 0) {
+        showToast("Your cart is empty.", "error");
+        return;
+      }
+      clearCart();
+      document.getElementById("checkout-form-section").classList.add("d-none");
+      document.getElementById("order-confirmation-section").classList.remove("d-none");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  });
+</script>
+</body>
+</html>

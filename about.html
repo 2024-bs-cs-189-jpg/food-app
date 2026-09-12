@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+(function () {
+  // Apply saved theme immediately, before CSS/paint, to avoid a flash
+  try {
+    var t = localStorage.getItem("savorco_theme") || "light";
+    document.documentElement.setAttribute("data-theme", t);
+  } catch (e) {}
+
+  // Register the broken-image fallback as early as possible (before
+  // any <img> in <body> starts loading) so fast failures are always
+  // caught -- a listener attached later (e.g. at DOMContentLoaded)
+  // can miss images that error out immediately.
+  document.addEventListener("error", function (evt) {
+    var img = evt.target;
+    if (!img || img.tagName !== "IMG" || img.dataset.fallbackApplied) return;
+    img.dataset.fallbackApplied = "true";
+    var ph = document.createElement("div");
+    ph.className = (img.className || "") + " img-fallback";
+    ph.setAttribute("role", "img");
+    ph.setAttribute("aria-label", img.alt || "Image unavailable");
+    ph.innerHTML = '<i class="fa-solid fa-bowl-food"></i>';
+    if (img.parentNode) img.parentNode.replaceChild(ph, img);
+  }, true);
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — Savor & Co.</title>
+<meta name="description" content="Our story, our mission, our chefs — learn what makes Savor & Co. different.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="about">
+
+<div id="loading-screen">
+  <div class="loader-mark"></div>
+  <div class="loader-text">Savor & Co.</div>
+</div>
+
+<nav class="site-navbar navbar navbar-expand-lg">
+  <div class="container-narrow d-flex align-items-center justify-content-between">
+    <a href="index.html" class="brand-mark"><i class="fa-solid fa-leaf"></i> Savor<span>&</span>Co.</a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+      <i class="fa-solid fa-bars fs-4"></i>
+    </button>
+    <div class="collapse navbar-collapse flex-grow-0" id="mainNavbar">
+      <ul class="navbar-nav mx-lg-4 gap-lg-2">
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="menu.html">Menu</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom active" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="offers.html">Offers</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="contact.html">Contact</a></li>
+      </ul>
+      <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
+        <a href="menu.html" class="btn-icon-circle" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></a>
+        <button class="btn-icon-circle theme-toggle-btn" id="themeToggleBtn" type="button" aria-label="Toggle dark mode">
+          <i class="fa-solid fa-moon"></i><i class="fa-solid fa-sun"></i>
+        </button>
+        <a href="cart.html" class="btn-icon-circle cart-badge-wrap" aria-label="Cart">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="cart-count-badge js-cart-count">0</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- =========================
+     RESTAURANT STORY
+========================= -->
+<header class="hero" style="padding:3.5rem 0;">
+  <div class="container-narrow">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 reveal left in-view">
+        <span class="hero-eyebrow">Our Story</span>
+        <h1 style="font-size:clamp(2rem,4vw,3.2rem);">A Kitchen Built On Honest Food</h1>
+        <p class="lead-text">Savor & Co. began in 2014 as a single neighbourhood kitchen with one rule: cook the way you would for your own family. A decade later, that rule hasn't changed.</p>
+      </div>
+      <div class="col-lg-6 reveal right in-view">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=800&auto=format&fit=crop" class="rounded-4 shadow" alt="Our restaurant's original kitchen">
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- =========================
+     MISSION AND VISION
+========================= -->
+<section class="section pt-3">
+  <div class="container-narrow">
+    <div class="row g-4">
+      <div class="col-md-6 reveal up">
+        <div class="p-4 rounded-4 bg-white shadow-sm h-100">
+          <div class="why-us-icon"><i class="fa-solid fa-bullseye"></i></div>
+          <h3 class="h5">Our Mission</h3>
+          <p class="mb-0">To make thoughtfully prepared, ingredient-led food accessible to every household — without compromising on flavour, freshness or care.</p>
+        </div>
+      </div>
+      <div class="col-md-6 reveal up">
+        <div class="p-4 rounded-4 bg-white shadow-sm h-100">
+          <div class="why-us-icon"><i class="fa-solid fa-eye"></i></div>
+          <h3 class="h5">Our Vision</h3>
+          <p class="mb-0">To become the most trusted everyday kitchen in every city we serve, known for consistency, warmth and genuine hospitality.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     TIMELINE / HISTORY
+========================= -->
+<section class="section pt-0">
+  <div class="container-narrow">
+    <div class="reveal up">
+      <span class="section-label">Milestones</span>
+      <h2 class="section-heading">Our Journey So Far</h2>
+    </div>
+    <div class="timeline mt-4">
+      <div class="timeline-item reveal up">
+        <div class="timeline-year">2014</div>
+        <h4 class="h6 mt-1">The First Kitchen</h4>
+        <p class="small mb-0">Opened our very first location with a menu of just twelve dishes.</p>
+      </div>
+      <div class="timeline-item reveal up">
+        <div class="timeline-year">2017</div>
+        <h4 class="h6 mt-1">Citywide Delivery Launch</h4>
+        <p class="small mb-0">Introduced our own delivery fleet to guarantee food arrives fresh and hot.</p>
+      </div>
+      <div class="timeline-item reveal up">
+        <div class="timeline-year">2021</div>
+        <h4 class="h6 mt-1">Three New Locations</h4>
+        <p class="small mb-0">Expanded to three neighbourhood kitchens to shorten delivery times.</p>
+      </div>
+      <div class="timeline-item reveal up">
+        <div class="timeline-year">2026</div>
+        <h4 class="h6 mt-1">50+ Dishes, One Standard</h4>
+        <p class="small mb-0">Now serving thousands of customers weekly, still cooking every dish to order.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     CHEF SECTION
+========================= -->
+<section class="section pt-0" style="background:var(--beige);border-radius:40px;margin:0 1rem;">
+  <div class="container-narrow py-4">
+    <div class="text-center reveal up">
+      <span class="section-label">Meet The Team</span>
+      <h2 class="section-heading">Our Professional Chefs</h2>
+    </div>
+    <div class="row g-4 mt-2">
+      <div class="col-sm-6 col-lg-3 reveal up">
+        <div class="chef-card">
+          <img src="https://images.unsplash.com/photo-1583394293214-28ded15ee548?q=80&w=500&auto=format&fit=crop" class="chef-photo" alt="Head Chef Marcus Bell">
+          <h4 class="h6 mb-0">Marcus Bell</h4>
+          <p class="small text-muted mb-0">Head Chef</p>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3 reveal up">
+        <div class="chef-card">
+          <img src="https://images.unsplash.com/photo-1607631568010-a87245c0daf8?q=80&w=500&auto=format&fit=crop" class="chef-photo" alt="Sous Chef Elena Cruz">
+          <h4 class="h6 mb-0">Elena Cruz</h4>
+          <p class="small text-muted mb-0">Sous Chef</p>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3 reveal up">
+        <div class="chef-card">
+          <img src="https://images.unsplash.com/photo-1595257841889-73dd2f841bf6?q=80&w=500&auto=format&fit=crop" class="chef-photo" alt="Pastry Chef Sana Iqbal">
+          <h4 class="h6 mb-0">Sana Iqbal</h4>
+          <p class="small text-muted mb-0">Pastry Chef</p>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3 reveal up">
+        <div class="chef-card">
+          <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=500&auto=format&fit=crop" class="chef-photo" alt="Grill Chef Tomas Novak">
+          <h4 class="h6 mb-0">Tomas Novak</h4>
+          <p class="small text-muted mb-0">Grill Chef</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     ANIMATED STATISTICS
+========================= -->
+<section class="section">
+  <div class="container-narrow reveal zoom">
+    <div class="stats-band">
+      <div class="row g-4">
+        <div class="col-6 col-md-3 stat-item">
+          <div class="stat-number"><span data-count-to="5000">0</span>+</div>
+          <div class="stat-label">Happy Customers</div>
+        </div>
+        <div class="col-6 col-md-3 stat-item">
+          <div class="stat-number"><span data-count-to="50">0</span>+</div>
+          <div class="stat-label">Food Items</div>
+        </div>
+        <div class="col-6 col-md-3 stat-item">
+          <div class="stat-number"><span data-count-to="15">0</span>+</div>
+          <div class="stat-label">Professional Chefs</div>
+        </div>
+        <div class="col-6 col-md-3 stat-item">
+          <div class="stat-number"><span data-count-to="4.9">0</span></div>
+          <div class="stat-label">Average Rating</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     WHY CHOOSE US
+========================= -->
+<section class="section pt-0">
+  <div class="container-narrow">
+    <div class="text-center reveal up">
+      <span class="section-label">Why Choose Us</span>
+      <h2 class="section-heading">What Sets Us Apart</h2>
+    </div>
+    <div class="row g-4 mt-2">
+      <div class="col-md-4 reveal up">
+        <div class="why-us-icon"><i class="fa-solid fa-seedling"></i></div>
+        <h3 class="h6">Fresh Ingredients</h3>
+        <p class="small">Sourced from local farms and delivered to our kitchens daily.</p>
+      </div>
+      <div class="col-md-4 reveal up">
+        <div class="why-us-icon"><i class="fa-solid fa-clock"></i></div>
+        <h3 class="h6">Fast Delivery</h3>
+        <p class="small">Most orders reach your door in under 30 minutes.</p>
+      </div>
+      <div class="col-md-4 reveal up">
+        <div class="why-us-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
+        <h3 class="h6">Made With Care</h3>
+        <p class="small">Every order is prepared fresh, never sitting under a heat lamp.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container-narrow">
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <a href="index.html" class="brand-mark text-white mb-3 d-inline-flex"><i class="fa-solid fa-leaf"></i> Savor<span>&</span>Co.</a>
+        <p class="small">Fresh, seasonal food made daily and delivered with care across the city.</p>
+        <div class="social-icon-row">
+          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+          <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <h6>Quick Links</h6>
+        <ul class="list-unstyled footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="offers.html">Offers</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-5">
+        <h6>Stay Updated</h6>
+        <p class="small">Subscribe for weekly offers and new menu drops.</p>
+        <form class="d-flex newsletter-form" onsubmit="event.preventDefault(); showToast('Subscribed successfully!');">
+          <input type="email" class="form-control" placeholder="Your email" required>
+          <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom text-center">© 2026 Savor & Co. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/cart.js"></script>
+</body>
+</html>
