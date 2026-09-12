@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+(function () {
+  // Apply saved theme immediately, before CSS/paint, to avoid a flash
+  try {
+    var t = localStorage.getItem("savorco_theme") || "light";
+    document.documentElement.setAttribute("data-theme", t);
+  } catch (e) {}
+
+  // Register the broken-image fallback as early as possible (before
+  // any <img> in <body> starts loading) so fast failures are always
+  // caught -- a listener attached later (e.g. at DOMContentLoaded)
+  // can miss images that error out immediately.
+  document.addEventListener("error", function (evt) {
+    var img = evt.target;
+    if (!img || img.tagName !== "IMG" || img.dataset.fallbackApplied) return;
+    img.dataset.fallbackApplied = "true";
+    var ph = document.createElement("div");
+    ph.className = (img.className || "") + " img-fallback";
+    ph.setAttribute("role", "img");
+    ph.setAttribute("aria-label", img.alt || "Image unavailable");
+    ph.innerHTML = '<i class="fa-solid fa-bowl-food"></i>';
+    if (img.parentNode) img.parentNode.replaceChild(ph, img);
+  }, true);
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us — Savor & Co.</title>
+<meta name="description" content="Get in touch with Savor & Co. — location, hours, contact form and FAQs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="contact">
+
+<div id="loading-screen">
+  <div class="loader-mark"></div>
+  <div class="loader-text">Savor & Co.</div>
+</div>
+
+<nav class="site-navbar navbar navbar-expand-lg">
+  <div class="container-narrow d-flex align-items-center justify-content-between">
+    <a href="index.html" class="brand-mark"><i class="fa-solid fa-leaf"></i> Savor<span>&</span>Co.</a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+      <i class="fa-solid fa-bars fs-4"></i>
+    </button>
+    <div class="collapse navbar-collapse flex-grow-0" id="mainNavbar">
+      <ul class="navbar-nav mx-lg-4 gap-lg-2">
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="menu.html">Menu</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="offers.html">Offers</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom active" href="contact.html">Contact</a></li>
+      </ul>
+      <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
+        <a href="menu.html" class="btn-icon-circle" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></a>
+        <button class="btn-icon-circle theme-toggle-btn" id="themeToggleBtn" type="button" aria-label="Toggle dark mode">
+          <i class="fa-solid fa-moon"></i><i class="fa-solid fa-sun"></i>
+        </button>
+        <a href="cart.html" class="btn-icon-circle cart-badge-wrap" aria-label="Cart">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="cart-count-badge js-cart-count">0</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" style="padding:3.5rem 0;">
+  <div class="container-narrow text-center reveal up in-view">
+    <span class="hero-eyebrow">Get In Touch</span>
+    <h1 style="font-size:clamp(2rem,4vw,3rem);">We'd Love To Hear From You</h1>
+    <p class="lead-text mx-auto">Questions, feedback or catering requests — our team replies within one business day.</p>
+  </div>
+</header>
+
+<!-- =========================
+     CONTACT INFO CARDS
+========================= -->
+<section class="container-narrow py-4">
+  <div class="row g-4">
+    <div class="col-md-4 reveal up">
+      <div class="contact-info-card">
+        <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <div>
+          <h3 class="h6 mb-1">Our Location</h3>
+          <p class="small mb-0">42 Harvest Lane, Maple Heights, Faisalabad</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 reveal up">
+      <div class="contact-info-card">
+        <div class="contact-icon"><i class="fa-solid fa-clock"></i></div>
+        <div>
+          <h3 class="h6 mb-1">Opening Hours</h3>
+          <p class="small mb-0">Mon–Sun: 9:00 AM – 11:00 PM</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 reveal up">
+      <div class="contact-info-card">
+        <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+        <div>
+          <h3 class="h6 mb-1">Phone / Email</h3>
+          <p class="small mb-0">+1 (555) 204-7788<br>hello@savorandco.com</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     CONTACT FORM + MAP
+========================= -->
+<section class="container-narrow pb-5">
+  <div class="row g-4">
+    <div class="col-lg-7 reveal left">
+      <div class="form-card">
+        <h2 class="h4 mb-3">Send Us a Message</h2>
+        <form id="contactForm" class="row g-3 needs-validation" novalidate>
+          <div class="col-md-6">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-control" required>
+            <div class="invalid-feedback">Please enter your name.</div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-control" required>
+            <div class="invalid-feedback">Please enter a valid email.</div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" required>
+            <div class="invalid-feedback">Phone number is required.</div>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Subject</label>
+            <select class="form-select" required>
+              <option value="" selected disabled>Choose one</option>
+              <option>General Inquiry</option>
+              <option>Catering Request</option>
+              <option>Feedback</option>
+              <option>Order Issue</option>
+            </select>
+            <div class="invalid-feedback">Please choose a subject.</div>
+          </div>
+          <div class="col-12">
+            <label class="form-label">Message</label>
+            <textarea class="form-control" rows="4" required></textarea>
+            <div class="invalid-feedback">Please write a message.</div>
+          </div>
+          <div class="col-12">
+            <button type="submit" class="btn-brand w-100">Send Message</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-lg-5 reveal right">
+      <div class="map-placeholder mb-4">
+        <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=900&auto=format&fit=crop" alt="Map view of our neighbourhood location" style="width:100%;height:100%;object-fit:cover;">
+        <i class="fa-solid fa-location-dot map-pin"></i>
+      </div>
+      <div class="p-4 rounded-4 bg-white shadow-sm">
+        <h3 class="h6 mb-3">Follow Us</h3>
+        <div class="social-icon-row" style="margin-top:0;">
+          <a href="#" style="background:var(--fresh-green-light); color:var(--deep-green);" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" style="background:var(--fresh-green-light); color:var(--deep-green);" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" style="background:var(--fresh-green-light); color:var(--deep-green);" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     FAQ ACCORDION
+========================= -->
+<section class="section pt-0">
+  <div class="container-narrow">
+    <div class="text-center reveal up">
+      <span class="section-label">Have Questions?</span>
+      <h2 class="section-heading">Frequently Asked Questions</h2>
+    </div>
+    <div class="accordion mt-3 reveal up" id="faqAccordion" style="max-width:720px;margin:0 auto;">
+      <div class="accordion-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+            What are your delivery hours?
+          </button>
+        </h3>
+        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">We deliver every day from 9:00 AM to 11:00 PM, including public holidays.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+            Do you cater for large events?
+          </button>
+        </h3>
+        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">Yes — select "Catering Request" in the contact form above and our events team will reach out within 24 hours.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+            Can I track my order in real time?
+          </button>
+        </h3>
+        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">Once your order is placed, you'll get status updates by email from confirmation through delivery.</div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h3 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+            Do you accommodate dietary restrictions?
+          </button>
+        </h3>
+        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">Absolutely — most dishes have vegetarian options, and our team is happy to note allergies on request.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container-narrow">
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <a href="index.html" class="brand-mark text-white mb-3 d-inline-flex"><i class="fa-solid fa-leaf"></i> Savor<span>&</span>Co.</a>
+        <p class="small">Fresh, seasonal food made daily and delivered with care across the city.</p>
+        <div class="social-icon-row">
+          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+          <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <h6>Quick Links</h6>
+        <ul class="list-unstyled footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="offers.html">Offers</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-5">
+        <h6>Stay Updated</h6>
+        <p class="small">Subscribe for weekly offers and new menu drops.</p>
+        <form class="d-flex newsletter-form" onsubmit="event.preventDefault(); showToast('Subscribed successfully!');">
+          <input type="email" class="form-control" placeholder="Your email" required>
+          <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom text-center">© 2026 Savor & Co. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/cart.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("contactForm");
+    attachFormValidation(form);
+    form.addEventListener("submit", () => {
+      if (form.checkValidity()) showToast("Message sent! We'll reply within one business day.");
+    });
+  });
+</script>
+</body>
+</html>

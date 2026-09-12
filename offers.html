@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>
+(function () {
+  // Apply saved theme immediately, before CSS/paint, to avoid a flash
+  try {
+    var t = localStorage.getItem("savorco_theme") || "light";
+    document.documentElement.setAttribute("data-theme", t);
+  } catch (e) {}
+
+  // Register the broken-image fallback as early as possible (before
+  // any <img> in <body> starts loading) so fast failures are always
+  // caught -- a listener attached later (e.g. at DOMContentLoaded)
+  // can miss images that error out immediately.
+  document.addEventListener("error", function (evt) {
+    var img = evt.target;
+    if (!img || img.tagName !== "IMG" || img.dataset.fallbackApplied) return;
+    img.dataset.fallbackApplied = "true";
+    var ph = document.createElement("div");
+    ph.className = (img.className || "") + " img-fallback";
+    ph.setAttribute("role", "img");
+    ph.setAttribute("aria-label", img.alt || "Image unavailable");
+    ph.innerHTML = '<i class="fa-solid fa-bowl-food"></i>';
+    if (img.parentNode) img.parentNode.replaceChild(ph, img);
+  }, true);
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offers & Deals — Savor & Co.</title>
+<meta name="description" content="Limited-time deals, promo codes and combo meals from Savor & Co.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="offers">
+
+<div id="loading-screen">
+  <div class="loader-mark"></div>
+  <div class="loader-text">Savor & Co.</div>
+</div>
+
+<nav class="site-navbar navbar navbar-expand-lg">
+  <div class="container-narrow d-flex align-items-center justify-content-between">
+    <a href="index.html" class="brand-mark"><i class="fa-solid fa-leaf"></i> Savor<span>&</span>Co.</a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+      <i class="fa-solid fa-bars fs-4"></i>
+    </button>
+    <div class="collapse navbar-collapse flex-grow-0" id="mainNavbar">
+      <ul class="navbar-nav mx-lg-4 gap-lg-2">
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="menu.html">Menu</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom active" href="offers.html">Offers</a></li>
+        <li class="nav-item"><a class="nav-link nav-link-custom" href="contact.html">Contact</a></li>
+      </ul>
+      <div class="d-flex align-items-center gap-2 mt-3 mt-lg-0">
+        <a href="menu.html" class="btn-icon-circle" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></a>
+        <button class="btn-icon-circle theme-toggle-btn" id="themeToggleBtn" type="button" aria-label="Toggle dark mode">
+          <i class="fa-solid fa-moon"></i><i class="fa-solid fa-sun"></i>
+        </button>
+        <a href="cart.html" class="btn-icon-circle cart-badge-wrap" aria-label="Cart">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="cart-count-badge js-cart-count">0</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" style="padding:3.5rem 0;">
+  <div class="container-narrow text-center reveal up in-view">
+    <span class="hero-eyebrow">Limited Time</span>
+    <h1 style="font-size:clamp(2rem,4vw,3rem);">Special Deals &amp; Combos</h1>
+    <p class="lead-text mx-auto">Handpicked offers, refreshed weekly — grab them before they're gone.</p>
+  </div>
+</header>
+
+<!-- =========================
+     FEATURED OFFER + COUNTDOWN TIMER
+========================= -->
+<section class="container-narrow py-4 reveal zoom in-view">
+  <div class="offer-strip rounded-4 flex-wrap gap-3">
+    <div>
+      <span class="badge badge-brand mb-2">Weekend Special</span>
+      <h3 class="text-white h4 mb-1">20% OFF All Pizzas</h3>
+      <p class="text-white-50 small mb-0">Ends soon — use code below at checkout.</p>
+    </div>
+    <div id="mainCountdown" class="countdown-box">
+      <div class="countdown-unit"><span class="num cd-hours">48</span><span class="lbl">Hours</span></div>
+      <div class="countdown-unit"><span class="num cd-minutes">00</span><span class="lbl">Mins</span></div>
+      <div class="countdown-unit"><span class="num cd-seconds">00</span><span class="lbl">Secs</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     DISCOUNT / PROMO CARDS
+========================= -->
+<section class="container-narrow pb-3">
+  <div class="row g-4">
+    <div class="col-md-6 col-lg-4 reveal up">
+      <div class="offer-card">
+        <span class="offer-badge limited">Limited Offer</span>
+        <img src="https://images.unsplash.com/photo-1601924582970-9238bcb495d9?q=80&w=600&auto=format&fit=crop" alt="Weekend pizza special" style="height:190px;width:100%;object-fit:cover;">
+        <div class="p-3">
+          <h3 class="h6 mb-1">20% OFF Weekend Special</h3>
+          <p class="small text-muted mb-3">Every Saturday & Sunday on all pizzas.</p>
+          <div class="promo-code"><i class="fa-solid fa-ticket"></i> WEEKEND20</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4 reveal up">
+      <div class="offer-card">
+        <span class="offer-badge best">Best Value</span>
+        <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=600&auto=format&fit=crop" alt="Buy one get one free burger" style="height:190px;width:100%;object-fit:cover;">
+        <div class="p-3">
+          <h3 class="h6 mb-1">Buy 1 Get 1 Free</h3>
+          <p class="small text-muted mb-3">On all classic burgers, every Tuesday.</p>
+          <div class="promo-code"><i class="fa-solid fa-ticket"></i> BURGERBOGO</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4 reveal up">
+      <div class="offer-card">
+        <span class="offer-badge popular">Popular</span>
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=600&auto=format&fit=crop" alt="Family combo meal" style="height:190px;width:100%;object-fit:cover;">
+        <div class="p-3">
+          <h3 class="h6 mb-1">Family Combo Meal</h3>
+          <p class="small text-muted mb-3">Feeds four — 2 mains, 2 sides, 2 drinks.</p>
+          <div class="promo-code"><i class="fa-solid fa-ticket"></i> FAMILY35</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4 reveal up">
+      <div class="offer-card">
+        <span class="offer-badge limited">Limited Offer</span>
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=600&auto=format&fit=crop" alt="Student meal deal" style="height:190px;width:100%;object-fit:cover;">
+        <div class="p-3">
+          <h3 class="h6 mb-1">Student Meal Deal</h3>
+          <p class="small text-muted mb-3">Main + drink for just $8.99 with valid student ID.</p>
+          <div class="promo-code"><i class="fa-solid fa-ticket"></i> STUDENT9</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4 reveal up">
+      <div class="offer-card">
+        <span class="offer-badge popular">Popular</span>
+        <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?q=80&w=600&auto=format&fit=crop" alt="Combo meal deal" style="height:190px;width:100%;object-fit:cover;">
+        <div class="p-3">
+          <h3 class="h6 mb-1">Chicken Combo Box</h3>
+          <p class="small text-muted mb-3">Korean fried chicken, fries and a drink for $16.99.</p>
+          <div class="promo-code"><i class="fa-solid fa-ticket"></i> CHICKBOX</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-4 reveal up">
+      <div class="offer-card">
+        <span class="offer-badge best">Best Value</span>
+        <img src="https://images.unsplash.com/photo-1624353365286-3f8d62daad51?q=80&w=600&auto=format&fit=crop" alt="Dessert bundle offer" style="height:190px;width:100%;object-fit:cover;">
+        <div class="p-3">
+          <h3 class="h6 mb-1">Sweet Tooth Bundle</h3>
+          <p class="small text-muted mb-3">Any 2 desserts for $10 — mix and match.</p>
+          <div class="promo-code"><i class="fa-solid fa-ticket"></i> SWEET10</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     FEATURED COMBO MEALS
+========================= -->
+<section class="section pt-3" style="background:var(--beige);border-radius:40px;margin:0 1rem;">
+  <div class="container-narrow py-4">
+    <div class="reveal up">
+      <span class="section-label">Combo Meals</span>
+      <h2 class="section-heading">Built For Sharing</h2>
+    </div>
+    <div class="row g-4 mt-2">
+      <div class="col-md-6 reveal left">
+        <div class="d-flex gap-3 bg-white rounded-4 p-3 shadow-sm h-100">
+          <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=300&auto=format&fit=crop" class="rounded-3" style="width:110px;height:110px;object-fit:cover;flex-shrink:0;" alt="Duo combo meal">
+          <div>
+            <h3 class="h6 mb-1">Duo Feast</h3>
+            <p class="small text-muted mb-2">1 pizza + 1 pasta + 2 drinks — perfect for two.</p>
+            <span class="food-price">$24.99</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 reveal right">
+        <div class="d-flex gap-3 bg-white rounded-4 p-3 shadow-sm h-100">
+          <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=300&auto=format&fit=crop" class="rounded-3" style="width:110px;height:110px;object-fit:cover;flex-shrink:0;" alt="Family combo meal">
+          <div>
+            <h3 class="h6 mb-1">Family Feast</h3>
+            <p class="small text-muted mb-2">2 mains + 2 sides + 2 desserts + 4 drinks.</p>
+            <span class="food-price">$34.99</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container-narrow">
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <a href="index.html" class="brand-mark text-white mb-3 d-inline-flex"><i class="fa-solid fa-leaf"></i> Savor<span>&</span>Co.</a>
+        <p class="small">Fresh, seasonal food made daily and delivered with care across the city.</p>
+        <div class="social-icon-row">
+          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+          <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <h6>Quick Links</h6>
+        <ul class="list-unstyled footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="offers.html">Offers</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-5">
+        <h6>Stay Updated</h6>
+        <p class="small">Subscribe for weekly offers and new menu drops.</p>
+        <form class="d-flex newsletter-form" onsubmit="event.preventDefault(); showToast('Subscribed successfully!');">
+          <input type="email" class="form-control" placeholder="Your email" required>
+          <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom text-center">© 2026 Savor & Co. All rights reserved.</div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/cart.js"></script>
+<script>initCountdown("mainCountdown", 48);</script>
+</body>
+</html>
