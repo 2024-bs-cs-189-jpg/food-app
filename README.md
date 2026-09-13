@@ -26,10 +26,10 @@ food-website/
 ├── css/
 │   └── style.css          All design tokens & component styles
 ├── js/
-│   ├── main.js            Shared food data, navbar, loading screen, toasts
-│   ├── animations.js  Scroll reveal, counters, countdown timer
-│   ├── menu.js           Search, category filter, food modal, favorites
-│   └── cart.js            Cart logic, localStorage persistence
+│   └── site.js            All shared behaviour combined in one file:
+│                          food data, navbar/loading screen/toasts, scroll
+│                          reveal + counters + countdown, cart logic, and
+│                          menu search/filter/modal
 ├── images/               (folder reserved for local image assets;
 │                          the site currently uses Unsplash CDN images)
 └── README.md
@@ -66,16 +66,16 @@ food-website/
 
 ## How the Cart Works
 
-- All food items live in a single array, `FOOD_ITEMS`, defined in `js/main.js`.
-- `addToCart(id, qty)` in `js/cart.js` adds an item (or increases its quantity) and saves the cart to `localStorage` under the key `savorco_cart`.
-- Every page that includes `js/cart.js` reads from the same `localStorage` key, so items added on `menu.html` are still present when you open `cart.html` or `checkout.html`.
+- All food items live in a single array, `FOOD_ITEMS`, defined in `js/site.js`.
+- `addToCart(id, qty)` in `js/site.js` adds an item (or increases its quantity) and saves the cart to `localStorage` under the key `savorco_cart`.
+- Every page that includes `js/site.js` reads from the same `localStorage` key, so items added on `menu.html` are still present when you open `cart.html` or `checkout.html`.
 - The navbar cart badge (`.js-cart-count`) is refreshed automatically whenever the cart changes.
 - `cart.html` and `checkout.html` render item lists and totals live from `localStorage` — quantity +/− buttons and the remove button update everything instantly.
 - Placing an order on `checkout.html` clears the cart and shows an order-confirmation screen.
 
 ## How to Customize Food Items
 
-Open `js/main.js` and edit the `FOOD_ITEMS` array. Each item looks like:
+Open `js/site.js` and edit the `FOOD_ITEMS` array near the top of the file. Each item looks like:
 
 ```js
 { id: "p1", name: "Margherita Supreme", category: "pizza", price: 12.5, rating: 4.8, reviews: 214,
@@ -86,7 +86,7 @@ Open `js/main.js` and edit the `FOOD_ITEMS` array. Each item looks like:
 
 - `id` must be unique — it's used by the cart and favorites.
 - `category` must match one of the filter pills on `menu.html` (`pizza`, `burgers`, `pasta`, `chicken`, `desserts`, `drinks`) or you can add a new pill in `menu.html` to match a new category.
-- Add or remove items freely — `menu.html`, the homepage "Featured Dishes" strip, and the food modal all read from this same array, so you only edit food data in one place.
+- Add or remove items freely — `menu.html`, the homepage "Featured Dishes" strip, and the food modal all read from this same array, so you only edit food data in one place (inside `js/site.js`).
 
 ## How to Change Colors
 
@@ -107,7 +107,7 @@ Change any value here and it updates across every page, since all components (bu
 
 ### Dark Mode
 
-Dark mode overrides the same variable set inside a `[data-theme="dark"] { ... }` block, further down in `css/style.css`, using the same coral family (bright coral accents on a near-black warm background) so it stays visually consistent with light mode. To adjust dark-mode colors, edit the hex values in that block. The theme is toggled by the moon/sun button in the navbar (`js/main.js` → `initThemeToggle()`), which flips `data-theme` on `<html>` and remembers the choice in `localStorage` under the key `savorco_theme`. A small inline script at the very top of every page's `<head>` re-applies the saved theme before the page paints (no flash of the wrong theme), and also registers the broken-image fallback listener as early as possible — before `js/main.js` loads — so even images that fail instantly are caught.
+Dark mode overrides the same variable set inside a `[data-theme="dark"] { ... }` block, further down in `css/style.css`, using the same coral family (bright coral accents on a near-black warm background) so it stays visually consistent with light mode. To adjust dark-mode colors, edit the hex values in that block. The theme is toggled by the moon/sun button in the navbar (`js/site.js` → `initThemeToggle()`), which flips `data-theme` on `<html>` and remembers the choice in `localStorage` under the key `savorco_theme`. A small inline script at the very top of every page's `<head>` re-applies the saved theme before the page paints (no flash of the wrong theme), and also registers the broken-image fallback listener as early as possible — before `js/site.js` loads — so even images that fail instantly are caught.
 
 ### Scrollbar
 
@@ -119,9 +119,9 @@ The scrollbar is themed near the bottom of `css/style.css` (`::-webkit-scrollbar
 2. Update the `<title>` and the `active` class on the matching navbar link.
 3. Set a unique `data-page="your-page"` attribute on `<body>` if the page needs page-specific JS logic (see how `cart.html` and `checkout.html` do this).
 4. Add a link to the new page in the navbar (and footer, if relevant) across **all** pages so navigation stays consistent.
-5. Keep the same `<script>` include order at the bottom: Bootstrap JS → `main.js` → `animations.js` → `cart.js` → (page-specific script, if any).
+5. Keep the same `<script>` include order at the bottom: Bootstrap JS → `js/site.js`.
 
 ## Notes
 
 - This is a **frontend-only** project — forms don't submit to a real server; checkout/contact actions are simulated with toast notifications and, on checkout, an order-confirmation screen.
-- Food images are served from Unsplash's CDN for reliability; swap them for local files in `images/food/` if you prefer offline assets — just update the `img` field in `js/main.js`.
+- Food images are served from Unsplash's CDN for reliability; swap them for local files in `images/food/` if you prefer offline assets — just update the `img` field in `js/site.js`.

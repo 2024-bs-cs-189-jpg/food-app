@@ -1,0 +1,46 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFE3DC"/>
+      <stop offset="100%" stop-color="#FDE7CB"/>
+    </linearGradient>
+    <linearGradient id="lassi" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFC773"/>
+      <stop offset="100%" stop-color="#FD9A3C"/>
+    </linearGradient>
+    <linearGradient id="glassShine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="400" height="400" fill="url(#bg)"/>
+
+  <!-- glass -->
+  <path d="M138 150 L262 150 L246 320 Q244 336 228 336 L172 336 Q156 336 154 320 Z"
+        fill="#FFFFFF" opacity="0.9"/>
+  <path d="M144 168 L256 168 L243 312 Q241 326 227 326 L173 326 Q159 326 157 312 Z"
+        fill="url(#lassi)"/>
+  <!-- creamy top swirl -->
+  <ellipse cx="200" cy="168" rx="56" ry="14" fill="#FFF3D6"/>
+  <ellipse cx="200" cy="164" rx="44" ry="10" fill="#FFFFFF" opacity="0.85"/>
+  <!-- glass rim -->
+  <path d="M138 150 L262 150 L259 168 L141 168 Z" fill="#FFFFFF"/>
+  <!-- shine -->
+  <path d="M158 178 L172 178 L160 300 L150 300 Z" fill="url(#glassShine)"/>
+
+  <!-- straw -->
+  <rect x="205" y="90" width="14" height="150" rx="7" fill="#E2625F" transform="rotate(12 212 165)"/>
+  <rect x="205" y="90" width="14" height="150" rx="7" fill="#FFFFFF" opacity="0.25" transform="rotate(12 212 165)"/>
+
+  <!-- mango slice garnish -->
+  <g transform="translate(255 138) rotate(18)">
+    <path d="M0 0 A34 34 0 0 1 34 34 L0 34 Z" fill="#FD9A3C"/>
+    <path d="M0 0 A34 34 0 0 1 34 34" fill="none" stroke="#FFF3D6" stroke-width="3"/>
+    <path d="M4 30 L30 4" stroke="#E2625F" stroke-width="2" opacity="0.5"/>
+  </g>
+
+  <!-- mint leaf -->
+  <path d="M150 140 Q135 118 156 104 Q168 128 150 140 Z" fill="#7FB37A"/>
+  <path d="M150 140 Q145 126 156 108" stroke="#5C8F58" stroke-width="2" fill="none"/>
+</svg>

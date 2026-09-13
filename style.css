@@ -23,6 +23,13 @@
   --ink-soft: #8C6F69;
   --white: #FFFFFF;
   --danger: #C0392B;
+  /* Fixed dark panel color for the footer / CTA band / loading screen.
+     These sections always use light (white) text on top, so their
+     background must stay dark in BOTH light and dark mode -- it must
+     NOT flip with --deep-green (which intentionally goes light in
+     dark mode for headings on the page's dark background). */
+  --panel-dark: #5A2A2E;
+  --panel-dark-2: #74383D;
 
   --font-display: 'Fraunces', Georgia, serif;
   --font-body: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -47,12 +54,13 @@ body, .site-navbar, .food-card, .form-card, .testimonial-card,
 
 /* -------------------- RESET / BASE -------------------- */
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 body {
   font-family: var(--font-body);
   color: var(--ink);
   background: var(--cream);
   overflow-x: hidden;
+  max-width: 100%;
   -webkit-font-smoothing: antialiased;
 }
 h1, h2, h3, h4, .display-font {
@@ -172,7 +180,7 @@ img { max-width: 100%; display: block; }
 #loading-screen {
   position: fixed;
   inset: 0;
-  background: var(--deep-green);
+  background: var(--panel-dark);
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -193,7 +201,7 @@ img { max-width: 100%; display: block; }
   margin-bottom: 1rem;
 }
 .loader-text {
-  color: var(--white);
+  color: #FFFFFF;
   font-family: var(--font-display);
   letter-spacing: 0.04em;
   font-size: 1.1rem;
@@ -457,8 +465,8 @@ img { max-width: 100%; display: block; }
    STATS / COUNTERS
    ========================================================= */
 .stats-band {
-  background: var(--deep-green);
-  color: var(--white);
+  background: var(--panel-dark);
+  color: #FFFFFF;
   border-radius: var(--radius-lg);
   padding: 2.8rem 2rem;
 }
@@ -510,8 +518,8 @@ img { max-width: 100%; display: block; }
 .offer-badge.best { background: var(--gold); color: var(--deep-green); }
 .offer-badge.popular { background: var(--fresh-green); color: var(--white); }
 .offer-strip {
-  background: var(--deep-green-2);
-  color: var(--white);
+  background: var(--panel-dark);
+  color: #FFFFFF;
   padding: 1rem 1.3rem;
   display: flex;
   align-items: center;
@@ -534,8 +542,8 @@ img { max-width: 100%; display: block; }
   gap: 0.7rem;
 }
 .countdown-unit {
-  background: var(--deep-green);
-  color: var(--white);
+  background: var(--panel-dark-2);
+  color: #FFFFFF;
   border-radius: var(--radius-sm);
   padding: 0.6rem 0.9rem;
   text-align: center;
@@ -746,11 +754,11 @@ img { max-width: 100%; display: block; }
 
 /* -------------------- FOOTER -------------------- */
 .site-footer {
-  background: var(--deep-green);
+  background: var(--panel-dark);
   color: rgba(255,255,255,0.8);
   padding: 4rem 0 1.5rem;
 }
-.site-footer h6 { color: var(--white); font-weight: 700; margin-bottom: 1.1rem; }
+.site-footer h6 { color: #FFFFFF; font-weight: 700; margin-bottom: 1.1rem; }
 .site-footer a { color: rgba(255,255,255,0.7); transition: color 0.2s ease; }
 .site-footer a:hover { color: var(--gold); }
 .footer-links li { margin-bottom: 0.6rem; }
@@ -802,11 +810,11 @@ img { max-width: 100%; display: block; }
 .badge-brand { background: var(--fresh-green-light); color: var(--deep-green); font-weight: 700; }
 .divider-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); display: inline-block; margin: 0 0.5rem; }
 .cta-band {
-  background: var(--deep-green);
+  background: var(--panel-dark);
   border-radius: var(--radius-lg);
   padding: 3.4rem 2rem;
   text-align: center;
-  color: var(--white);
+  color: #FFFFFF;
   position: relative;
   overflow: hidden;
 }
@@ -877,6 +885,12 @@ img { max-width: 100%; display: block; }
    follow our CSS variables by default -- override them here so text
    stays readable (light text in dark mode, dark text in light mode). */
 [data-theme="dark"] .text-dark { color: var(--ink) !important; }
+/* Bootstrap's .bg-white is a fixed white and won't follow the theme on
+   its own. Cards, category tiles, and info panels that use it need to
+   become dark cards in dark mode -- otherwise light-colored headings
+   (var(--deep-green)) and .text-dark labels end up almost invisible
+   sitting on a card that stayed pure white. */
+[data-theme="dark"] .bg-white { background: var(--white) !important; }
 [data-theme="dark"] .text-muted { color: var(--ink-soft) !important; }
 [data-theme="dark"] .text-black { color: var(--ink) !important; }
 [data-theme="dark"] .text-body { color: var(--ink) !important; }
@@ -889,8 +903,6 @@ img { max-width: 100%; display: block; }
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5);
 }
 [data-theme="dark"] .nav-link-custom { color: var(--ink) !important; }
-
-[data-theme="dark"] #loading-screen { background: var(--white); }
 
 [data-theme="dark"] .form-control,
 [data-theme="dark"] .form-select {
@@ -969,7 +981,7 @@ img { max-width: 100%; display: block; }
   width: 100%;
   height: 100%;
   min-height: 90px;
-  background: linear-gradient(135deg, var(--fresh-green-light), var(--beige));
-  color: var(--fresh-green);
+  background: linear-gradient(135deg, #FFE3DC, #FDE7CB);
+  color: #E2625F;
   font-size: 2rem;
 }

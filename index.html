@@ -19,6 +19,10 @@
     img.dataset.fallbackApplied = "true";
     var ph = document.createElement("div");
     ph.className = (img.className || "") + " img-fallback";
+    // Preserve the original <img>'s inline size (e.g. small circular
+    // thumbnails) so the placeholder doesn't balloon to fill its
+    // parent card -- only className is inherited by default.
+    if (img.getAttribute("style")) ph.setAttribute("style", img.getAttribute("style"));
     ph.setAttribute("role", "img");
     ph.setAttribute("aria-label", img.alt || "Image unavailable");
     ph.innerHTML = '<i class="fa-solid fa-bowl-food"></i>';
@@ -40,7 +44,7 @@
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <!-- Site styles -->
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="style.css">
 </head>
 <body data-page="home">
 
@@ -169,7 +173,7 @@
       </div>
       <div class="col-6 col-md-4 col-lg-2 reveal up">
         <a href="menu.html" class="d-block text-center p-3 rounded-4 bg-white shadow-sm h-100 text-decoration-none">
-          <img src="https://images.unsplash.com/photo-1622597489934-88ce15b8c2f3?q=80&w=300&auto=format&fit=crop" class="rounded-circle mb-2 mx-auto" style="width:64px;height:64px;object-fit:cover;" alt="Drinks category">
+          <img src="https://images.unsplash.com/photo-1623065422902-30a2d299bbe4?q=80&w=300&auto=format&fit=crop" class="rounded-circle mb-2 mx-auto" style="width:64px;height:64px;object-fit:cover;" alt="Drinks category">
           <div class="fw-semibold small text-dark">Drinks</div>
         </a>
       </div>
@@ -383,10 +387,10 @@
         <a href="index.html" class="brand-mark text-white mb-3 d-inline-flex"><i class="fa-solid fa-leaf"></i> Savor<span>&</span>Co.</a>
         <p class="small">Fresh, seasonal food made daily and delivered with care across the city.</p>
         <div class="social-icon-row">
-          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-          <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
-          <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="https://www.facebook.com/savorandco" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/savorandco" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://twitter.com/savorandco" target="_blank" rel="noopener" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+          <a href="https://www.tiktok.com/@savorandco" target="_blank" rel="noopener" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
         </div>
       </div>
       <div class="col-6 col-lg-3">
@@ -415,9 +419,7 @@
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/main.js"></script>
-<script src="js/animations.js"></script>
-<script src="js/cart.js"></script>
+<script src="site.js"></script>
 <script>
   // Render only the first 6 items on the homepage "Featured Dishes" strip
   document.addEventListener("DOMContentLoaded", () => {
